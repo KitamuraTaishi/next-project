@@ -6,9 +6,9 @@ import Category from "@/components/Category"
 import { NEWS_LIST_LIMIT } from "@/constants"
 import Pagination from "@/components/Pagination"
 type Props = {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
 export default async function Page({ params }: Props) {

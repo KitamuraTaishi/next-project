@@ -4,15 +4,17 @@ import NewsList from "@/components/NewsList";
 import SearchField from "@/components/SearchField";
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
-  };
+  }>;
 };
 
+
 export default async function Page({ searchParams }: Props) {
+  const { q } = await searchParams
   const { contents: news } = await getNewsList({
     limit: NEWS_LIST_LIMIT,
-    q: searchParams.q,
+    q: q,
   });
 
   return (
