@@ -7,18 +7,19 @@ import Pagination from "@/components/Pagination";
 
 
 type Props = {
-    params: {
+    params: Promise<{
       id: string
       current: string
-    }
+    }>
 }
 export default async function Page({ params }: Props) {
-    const current = parseInt(params.current as string, 10);
+  const { id, current: currentString } = await params
+  const current = parseInt(currentString, 10);
   
     if (Number.isNaN(current) || current < 1) {
       notFound();
     }
-    const category = await getCategroyDetail(params.id).catch(notFound)
+    const category = await getCategroyDetail(id).catch(notFound)
     const { contents: news, totalCount } = await getNewsList({
       filters: `category[equals]${category}`,
       limit: NEWS_LIST_LIMIT,
