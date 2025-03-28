@@ -6,12 +6,13 @@ import Pagination from "@/components/Pagination";
 
 
 type Props = {
-    params: {
+    params: Promise<{
         current: string
-    }
+    }>
 }
 export default async function Page({ params }: Props) {
-    const current = parseInt(params.current as string, 10);
+  const { current: currentString} = await params
+    const current = parseInt(currentString as string, 10);
   
     if (Number.isNaN(current) || current < 1) {
       notFound();
